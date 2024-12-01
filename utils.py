@@ -42,7 +42,6 @@ def time_solution(func: Callable, *args, **kwargs) -> Any:
     print(f"- {execution_time_ms:.2f} ms")
     print(f"- {math.ceil(execution_time_us)} µs")
     return result
-de
 
 def parse_lines(input_str: str, delimiter: str = None) -> list[list[str]] | list[str]:
     """
