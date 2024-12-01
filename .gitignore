@@ -12,6 +12,10 @@
 .idea/**/dictionaries
 .idea/**/shelf
 
+/.idea
+/.idea/
+.idea
+
 # AWS User-specific
 .idea/**/aws.xml
 
@@ -237,10 +241,11 @@ celerybeat.pid
 *.sage.py
 
 # Environments
+.idea
 .env
 .venv
 env/
-venv/
+.venv/
 ENV/
 env.bak/
 venv.bak/
@@ -299,3 +304,6 @@ pyvenv.cfg
 pip-selfcheck.json
 
 # End of https://www.toptal.com/developers/gitignore/api/pycharm,venv,python
+/.idea/misc.xml
+/.venv/
+/.venv/
