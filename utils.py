@@ -15,8 +15,9 @@ def load_input(day: int, input_type: InputType = InputType.MAIN) -> str:
     """
     Load the input for a specific day and type
     """
+    base_path = Path(__file__).parent  # get the directory of utils.py
     file_name = "example.txt" if input_type == InputType.EXAMPLE else "input.txt"
-    input_file = Path(f"./Day{day:02}/{file_name}")
+    input_file = base_path / f"Day{day:02}" / file_name
 
     if input_file.exists():
         with open(input_file, "r") as f:
