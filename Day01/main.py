@@ -1,4 +1,6 @@
-from utils import SolutionBase, parse_lines
+from collections import Counter
+
+from utils import SolutionBase, parse_lines, parse_input_pairs
 
 
 class Day01Solution(SolutionBase):
@@ -6,21 +8,9 @@ class Day01Solution(SolutionBase):
         super().__init__(day=1)
 
     def part_one(self) -> int:
-        # parse the input into lines
-        # auto split on any whitespace
-        parsed_lines = parse_lines(self.input_data, delimiter=None)
+        # get left/right list
+        left_list, right_list = parse_input_pairs(self.input_data)
 
-        # ensure each line has exactly two parts
-        sanitized_pairs = []
-        for line in parsed_lines:
-            # split on any whitespace
-            parts = line.split()
-            if len(parts) != 2:
-                raise ValueError(f"Malformed input line: {line}")
-            sanitized_pairs.append((int(parts[0]), int(parts[1])))
-
-        # separate into left and right lists and sort
-        left_list, right_list = zip(*sanitized_pairs)
         left_list = sorted(left_list)
         right_list = sorted(right_list)
 
@@ -29,7 +19,15 @@ class Day01Solution(SolutionBase):
         return total_distance
 
     def part_two(self) -> int:
-        return 0
+        # get left/right list
+        left_list, right_list = parse_input_pairs(self.input_data)
+
+        # count occurrences in the right list
+        right_count = Counter(right_list)
+
+        # calculate the similarity score
+        similarity_score = sum(num * right_count[num] for num in left_list)
+        return similarity_score
 
 
 if __name__ == "__main__":
