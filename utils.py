@@ -44,6 +44,7 @@ def time_solution(func: Callable, *args, **kwargs) -> Any:
     print(f"- {math.ceil(execution_time_us)} µs")
     return result
 
+
 def parse_lines(input_str: str, delimiter: str = None) -> list[list[str]] | list[str]:
     """
     Parse input into lines, optionally splitting each line by a delimiter
@@ -142,3 +143,32 @@ class SolutionBase:
         print("\nPart Two:")
         result_two = time_solution(self.part_two)
         print(f"Result: {result_two}")
+
+
+def parse_input_pairs(input_str: str) -> tuple[List[int], List[int]]:
+    """
+    Parse input into two lists of integers, representing pairs of numbers.
+
+    Args:
+        input_str (str): The raw input string.
+
+    Returns:
+        tuple[List[int], List[int]]: Two lists of integers (left_list, right_list).
+
+    Raises:
+        ValueError: If any line of input is malformed or does not contain exactly two integers.
+    """
+    # parse the input into lines
+    parsed_lines = parse_lines(input_str, delimiter=None)  # auto-split on any whitespace
+
+    # ensure each line has exactly two parts and convert to integer pairs
+    sanitized_pairs = []
+    for line in parsed_lines:
+        parts = line.split()  # split each line on whitespace
+        if len(parts) != 2:
+            raise ValueError(f"Malformed input line: {line}")
+        sanitized_pairs.append((int(parts[0]), int(parts[1])))
+
+    # separate into left and right lists
+    left_list, right_list = zip(*sanitized_pairs)
+    return list(left_list), list(right_list)
