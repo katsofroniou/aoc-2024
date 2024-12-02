@@ -15,21 +15,41 @@ def is_safe(levels):
     return False
 
 
+def is_safe_with_dampener(levels):
+    # if already safe, return true
+    if is_safe(levels):
+        return True
+
+    # try removing each level and check if the remaining report is safe
+    for i in range(len(levels)):
+        modified_report = levels[:i] + levels[i + 1:]  # remove the i-th level
+        if is_safe(modified_report):
+            return True
+
+    return False
+
+
+def parse_into_lists(input_data):
+    # split into lines of numbers
+    reports = parse_lines(input_data, delimiter=None)
+
+    # convert each line to a list of ints and return
+    return [list(map(int, line.split())) for line in reports]
+
+
 class Day02Solution(SolutionBase):
     def __init__(self):
         super().__init__(day=2)
 
     def part_one(self) -> int:
-        # split into lines of numbers
-        reports = parse_lines(self.input_data, delimiter=None)
-
-        # convert each line to a list of ints
-        reports = [list(map(int, line.split())) for line in reports]
+        reports = parse_into_lists(self.input_data)
 
         return sum(1 for report in reports if is_safe(report))
 
     def part_two(self) -> int:
-        return 0
+        reports = parse_into_lists(self.input_data)
+
+        return sum(1 for report in reports if is_safe_with_dampener(report))
 
 
 if __name__ == "__main__":
