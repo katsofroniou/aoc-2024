@@ -17,7 +17,31 @@ class Day03Solution(SolutionBase):
         return sum(int(x) * int(y) for x, y in matches)
 
     def part_two(self) -> int:
-        return 0
+        # regex patterns for valid mul(x, y), do(), and don't()
+        valid_mul_pattern = r"mul\((\d+),(\d+)\)"
+        enable_pattern = r"do\(\)"
+        disable_pattern = r"don't\(\)"
+
+        total = 0
+        enabled = True
+
+        # process input linearly
+        # TODO check if refactorable
+        tokens = re.split(r"(mul\(\d+,\d+\)|do\(\)|don't\(\))", self.input_data)
+        for token in tokens:
+            token = token.strip()
+            if not token:
+                continue
+
+            if re.match(enable_pattern, token):
+                enabled = True
+            elif re.match(disable_pattern, token):
+                enabled = False
+            elif re.match(valid_mul_pattern, token) and enabled:
+                x, y = map(int, re.findall(r"\d+", token))
+                total += x * y
+
+        return total
 
 
 if __name__ == "__main__":
